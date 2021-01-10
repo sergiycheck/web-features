@@ -7,11 +7,11 @@ body {
     padding-left: 50px;
   }
   
-   /* .board-row:after {
+   .board-row:after {
     clear: both;
     content: "";
     display: table;
-  }  */
+  } 
   
   .status {
     margin-bottom: 10px;
@@ -20,7 +20,7 @@ body {
   .square {
     background: #fff;
     border: 2px dashed #999;
-    /* float: left; */
+    float: left;
     font-size: 24px;
     font-weight: bold;
     line-height: 34px;
