@@ -68,46 +68,17 @@ class Square extends React.Component {
   }
 
 
-
-  //how to initialize squares?
   
   class Board extends React.Component {
 
-    constructor(props){
-      super(props);
-      
-      this.state={
-        //squares: [...Array(16).keys()],
-        //squares:Array.from({length:16},(_,i)=>i+1),
-        //squares:Array.from(range(3,12,1)),
-        squares:Array(9).fill(null),
-        xIsNext:true,
-      }
-    }
-
-
-
-    handleClick(i){
-      const squares  = this.state.squares.slice();//copy array without changing initial array
-      if(calculateWinner(squares)||squares[i]){
-        return;
-      }
-
-
-      squares[i] =this.state.xIsNext? "X":"O";
-
-      this.setState({
-        squares:squares,
-        xIsNext:!this.state.xIsNext
-      });
-    }
+ 
 
 
     renderSquare(i) {
       return <Square  
-      value={this.state.squares[i]} 
+      value={this.props.squares[i]} 
       key={i}
-      onClick ={()=> {this.handleClick(i)}}
+      onClick ={()=> {this.props.onClick(i)}}
       />;
     }
 
@@ -121,17 +92,10 @@ class Square extends React.Component {
   
     render() {
       
-      const winner = calculateWinner(this.state.squares);
-      let status;
-      if(winner){
-        status = `Winner is ${winner} player`;
-      }else{
-        status = `Next player: ${this.state.xIsNext? "X":"O"}`;
-      }
 
       return (
         <div>
-          <div className="status">{status}</div>
+         
  
           <div className="board-row">
             {this.getSquares(0,3)}
@@ -142,11 +106,6 @@ class Square extends React.Component {
           <div className="board-row">
             {this.getSquares(6,9)}
           </div>
-
-
-          {/* <div className="board-row">
-            {this.getSquares(12,16)}
-          </div> */}
 
         </div>
       );
@@ -204,6 +163,30 @@ class Square extends React.Component {
   }
 
 
+  class Counter extends React.Component{
+    constructor(props){
+      super(props);
+      this.state={       
+        count:0,  
+      }
+    }
+    render(){
+      return (
+        <div className="like-widget">
+          <span>Likes {this.state.count}</span>
+
+          <span onClick={() => this.setState({ count: this.state.count + 1 })} className="like-heart">
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"  className=" bi bi-heart-fill " viewBox="0 0 16 16">
+            <path fillRule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+          </svg>
+          </span>
+          
+        </div>
+      );
+    }
+  }
+
+
   class Game extends React.Component {
 
     constructor(props){
@@ -213,21 +196,81 @@ class Square extends React.Component {
         history:[{
           squares:Array(9).fill(null)
         }],
+        stepNum:0,
         xIsNext:true,
+
       }
     }
 
+
+    handleClick(i){
+
+      const history = this.state.history.slice(0,this.state.stepNum+1);
+      const current = history[history.length-1];
+      const squares  = current.squares.slice();//copy array without changing initial array
+
+      if(calculateWinner(squares)||squares[i]){
+        return;
+      }
+      squares[i] =this.state.xIsNext? "X":"O";
+
+      this.setState({
+        history:history.concat([{
+          squares:squares,
+        }]),
+        stepNum:history.length,
+        xIsNext:!this.state.xIsNext
+      });
+
+    }
+
+    jumpToMove(step){
+        
+      this.setState({
+        stepNum:step,
+        xIsNext:(step%2)===0,
+      });
+    }
+
     render() {
+      const history = this.state.history;
+      const current = history[this.state.stepNum];
+      const winner = calculateWinner(current.squares);
+      let status;
+      if(winner){
+        status = `Winner is ${winner} player`;
+      }else{
+        status = `Next player: ${this.state.xIsNext? "X":"O"}`;
+      }
+      const moves = history.map((step,move)=>{
+        const description = move?
+        `Go to move number ${move}`:
+        `Got to the start`;
+        return(
+          <li key={move}>
+            <button className="btn btn-primary" onClick={()=>this.jumpToMove(move)}>{description}</button>
+          </li>
+        )
+      });
+
+      
+
+
       return (
         <div className="game">
           <div className="game-board">
-            <Board />
+          
+            <Board 
+              squares={current.squares}
+              onClick={(i)=>this.handleClick(i)}
+            />
             <ShoppingList name="TestName"/>
             <Clock />
+            <Counter/>
           </div>
           <div className="game-info">
-            <div>{/* status */}</div>
-            <ol>{/* TODO */}</ol>
+          <div className="status">{status}</div>
+            <ol>{moves}</ol>
           </div>
         </div>
       );
