@@ -1,0 +1,26 @@
+nav ul{
+  display: flex;
+  list-style-type: none;
+  justify-content:space-around;
+  background-color: rgba(225, 225, 225, 0.545);
+}
+nav ul li{
+  padding: 0.3em;
+}
+
+nav ul li:hover{
+  background-color:black;
+
+}
+nav ul li:hover a{
+  color:white;
+}
+
+nav ul li a:hover{
+  font-weight: 500;
+}
+
+nav ul li a{
+  text-decoration: none;
+  text-transform: uppercase;
+}
