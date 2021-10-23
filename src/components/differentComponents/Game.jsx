@@ -1,6 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Home from './Home';
+// import ReactDOM from 'react-dom';
+// import Home from './Home';
 import LoginControl from './Auth_custom';
 
 
@@ -24,27 +24,27 @@ class Square extends React.Component {
 	}
 }
 
-function range(start, end, step = 1) {
+// function range(start, end, step = 1) {
 
-	const allNumbers = [start, end, step].every(Number.isFinite);
+// 	const allNumbers = [start, end, step].every(Number.isFinite);
 
-	if (!allNumbers) {
-		throw new TypeError('range() expects only finite numbers as arguments.');
-	}
+// 	if (!allNumbers) {
+// 		throw new TypeError('range() expects only finite numbers as arguments.');
+// 	}
 	
-	if (step <= 0) {
-		throw new Error('step must be a number greater than 0.');
-	}
+// 	if (step <= 0) {
+// 		throw new Error('step must be a number greater than 0.');
+// 	}
 	
-	if (start > end) {
-		step = -step;
-	}
+// 	if (start > end) {
+// 		step = -step;
+// 	}
 	
-	const length = Math.floor(Math.abs((end - start) / step)) + 1;
+// 	const length = Math.floor(Math.abs((end - start) / step)) + 1;
 	
-	return Array.from(Array(length), (x, index) => start + index * step);
+// 	return Array.from(Array(length), (x, index) => start + index * step);
 	
-}
+// }
 
 function calculateWinner(squares) {
 	const lines = [

@@ -1,96 +1,59 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Home from './Home';
-import './App.css';
-import Game from './Game';
-import BoilingContainer from './Boiling';
-import FilterableProducts from './FilterableProducts';
-import HooksExample from './Hooks-Example.jsx';
+import React from "react";
+import "./App.scss";
+
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
-  useRouteMatch,
-  useParams
+
 } from "react-router-dom";
 
+import {DifferentComponents} from './differentComponents/DifferentComponents.js';
 
+import {ContextContainer} from './advancedComponents/ContextContainer.jsx';
 
+const App = () => {
+  return (
+    <Router>
+      <div className="wrapper">
+        <nav
+          style={{
+            position: "fixed",
+            width: "100%",
+            top: 0,
+            left: 0,
+            right: 0,
+          }}
+        >
+          <ul>
+            <li>
+              <Link to="/">DifferentComponents</Link>
+            </li>
 
+            <li>
+              <Link to="/advancedComponents">advancedComponents</Link>
+            </li>
 
-class App extends React.Component{
-	constructor(props){
-    super(props);
-  }
-	
-	render(){
-		return(
-			
-			<Router>
-			<div>
+          </ul>
+        </nav>
 
-				<nav>
+        <div className="container mt-5">
+          <Switch>
 
-					<ul>
-						<li>
-							<Link to="/">Game</Link>
-						</li>
-						<li>
-							<Link to="/home">home</Link>
-						</li>
-						<li>
-							<Link to="/boiling">boiling</Link>
-						</li>
-						<li>
-							<Link to="/products">products</Link>
-						</li>
-						<li>
-							<Link to="/hooks">hooks</Link>
-						</li>
-					</ul>
+            <Route exact path="/advancedComponents">
+              <ContextContainer></ContextContainer>
+            </Route>
 
-				</nav>
-
-				<div className="container">
-
-					<Switch>
-
-						<Route path="/game">
-							<Game />
-						</Route>
-						<Route path="/home">
-							<Home></Home>
-						</Route>
-						<Route path="/boiling">
-							<BoilingContainer></BoilingContainer>
-						</Route>
-						<Route path="/products">
-							<FilterableProducts></FilterableProducts>
-						</Route>
-						<Route path="/hooks">
-							<HooksExample></HooksExample>
-						</Route>
-
-
-						<Route path="/">
-							<Game />
-						</Route>
-
-					</Switch>
-
-				</div>
-
-
-			</div>
-
-		</Router>
-
-
-		);
-	}
-}
-
+            <Route exact path="/">
+              <DifferentComponents />
+            </Route>
+          </Switch>
+        </div>
+      </div>
+    </Router>
+  );
+};
 
 export default App;
