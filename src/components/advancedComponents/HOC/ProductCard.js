@@ -1,6 +1,19 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 
 import { productsJsonArr } from "./ProductsJsonArr.js";
+
+export const HocComponents = () => {
+  return (
+    <div style={{ display: "flex", justifyContent: "space-around" }}>
+      <section>
+        <ProductsListWithSearch></ProductsListWithSearch>
+      </section>
+      <section>
+        <ArticleListWithSearch></ArticleListWithSearch>
+      </section>
+    </div>
+  );
+};
 
 // export const ProductsListWithSearch = () => {
 
@@ -57,8 +70,7 @@ const ProductCard = (props) => {
 };
 
 const ProductsList = (props) => {
-  const { products } = props;
-
+  const { data: products } = props;
   return (
     <div>
       <section>
@@ -76,16 +88,26 @@ const ProductsList = (props) => {
   );
 };
 
-export const withSearchFeature = (WrappedComponent, dataArr) => {
+export const withSearchFeature = (WrappedComponent, selectDataArr) => {
   const WithSearch = () => {
     const [searchTerm, setSearchTerm] = useState("");
+    const [dataArr, setDataArr] = useState([]);
 
     const handleSearch = (e) => {
       setSearchTerm(e.target.value);
     };
 
+    useEffect(() => {
+      async function fetchDataArr() {
+        const fetchedDataArr = await selectDataArr();
+        setDataArr(fetchedDataArr);
+      }
+      fetchDataArr();
+    }, []);
+
     const memoizedFilteredProducts = useMemo(
       function filterProducts() {
+
         if (searchTerm === "") return dataArr;
 
         let searchTermNormalized = searchTerm.toUpperCase();
@@ -98,7 +120,7 @@ export const withSearchFeature = (WrappedComponent, dataArr) => {
           return termIncludes;
         });
       },
-      [searchTerm]
+      [dataArr, searchTerm]
     );
 
     return (
@@ -109,9 +131,7 @@ export const withSearchFeature = (WrappedComponent, dataArr) => {
           type="text"
           placeholder="search..."
         ></input>
-        <WrappedComponent
-          products={memoizedFilteredProducts}
-        ></WrappedComponent>
+        <WrappedComponent data={memoizedFilteredProducts}></WrappedComponent>
       </React.Fragment>
     );
   };
@@ -125,4 +145,87 @@ const getDisplayName = (WrappedComponent) => {
   return WrappedComponent.displayName || WrappedComponent.name || "Component";
 };
 
-export const ProductsListWithSearch = withSearchFeature(ProductsList, productsJsonArr);
+const ArticleList = (props) => {
+  const { data: articles } = props;
+
+  return (
+    <div>
+      <section>
+        <h3>Articles</h3>
+      </section>
+      <section>
+        {articles.map((article, i) => (
+          <div key={`${article.id}${i}`}>
+            <ArticleCard {...article}></ArticleCard>
+            <hr />
+          </div>
+        ))}
+      </section>
+    </div>
+  );
+};
+const ArticleCard = (props) => {
+  const {
+    type_of,
+    title,
+    description,
+    readable_publish_date,
+    comments_count,
+    cover_image,
+    tags,
+  } = props;
+
+  return (
+    <div>
+      <div>
+        <img
+          src={cover_image}
+          alt={tags}
+          className="img img-fluid"
+          style={{ maxHeight: "400px", maxWidth: "400px" }}
+        />
+      </div>
+      <p>
+        <b>type</b> {type_of}
+      </p>
+      <p>
+        <b>title</b> {title}
+      </p>
+      <p>
+        <b>description</b> {description}
+      </p>
+      <p>
+        <b>published at</b> {readable_publish_date}
+      </p>
+      <p>
+        <b>comments:</b> {comments_count}
+      </p>
+      <p>
+        <b>tags</b> {tags}
+      </p>
+    </div>
+  );
+};
+
+export const ProductsListWithSearch = withSearchFeature(
+  ProductsList,
+  async function getProductsArr() {
+    const response = await new Promise((resolve) => {
+      resolve(productsJsonArr);
+    });
+    return response;
+  }
+);
+
+// https://developers.forem.com/api#operation/getArticles
+
+export const ArticleListWithSearch = withSearchFeature(
+  ArticleList,
+  async function fetchArticlesFromServer() {
+    const response = await fetch("https://dev.to/api/articles?per_page=20");
+    const fetchedData = await response.json();
+    if (response.ok) {
+      return fetchedData;
+    }
+  }
+);
