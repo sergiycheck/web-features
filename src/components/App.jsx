@@ -28,6 +28,8 @@ import { CounterWithUseReducer } from "./advancedComponents/hooksApi/CounterWith
 import { HocComponents } from "./advancedComponents/HOC/ProductCard";
 
 import { RouteWithSubRoutes } from "../helpers/RouteHelper";
+import Hello from "./tasableComponents/firstTestableComponentHello/hello";
+import User from "./tasableComponents/User/user";
 
 const routes = [
   {
@@ -58,6 +60,16 @@ const routes = [
         component: CounterWithUseReducer,
       },
       { path: "/advancedComponents/HocComponents", component: HocComponents },
+      {
+        path: "/advancedComponents/HelloTestable",
+        component: Hello,
+        props: { name: "myname" },
+      },
+      {
+        path: "/advancedComponents/UserTestable",
+        component: User,
+        props: { name: "mojombo" },
+      },
     ],
   },
   {

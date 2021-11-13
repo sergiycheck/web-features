@@ -32,9 +32,9 @@ export const ContextContainer = ({ routes }) => {
 
       <div>
         <Switch>
-          {routes.map((route, i) => (
-            <RouteWithSubRoutes key={i} {...route} />
-          ))}
+          {routes.map((route, i) => {
+            return <RouteWithSubRoutes key={i} {...route} />;
+          })}
         </Switch>
       </div>
     </div>
