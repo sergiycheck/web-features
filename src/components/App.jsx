@@ -16,7 +16,7 @@ import Game from "./differentComponents/Game";
 import BoilingContainer from "./differentComponents/Boiling";
 import FilterableProducts from "./differentComponents/FilterableProducts";
 import HooksExample from "./differentComponents/Hooks-Example";
-import GoogleMap from "./differentComponents/GoogleMap";
+
 import { AppContextBad } from "./advancedComponents/context/ContextComponentBad";
 import { AppContextGood } from "./advancedComponents/context/ContextComponentGood";
 import { MyComponent } from "./advancedComponents/code-splitting/MyConponent";
@@ -30,6 +30,7 @@ import { HocComponents } from "./advancedComponents/HOC/ProductCard";
 import { RouteWithSubRoutes } from "../helpers/RouteHelper";
 import Hello from "./tasableComponents/firstTestableComponentHello/hello";
 import User from "./tasableComponents/User/user";
+import { MyAppMap } from "./tasableComponents/GoogleMapsTestable/map";
 
 const routes = [
   {
@@ -70,6 +71,10 @@ const routes = [
         component: User,
         props: { name: "mojombo" },
       },
+      {
+        path: "/advancedComponents/testableGoogleMap",
+        component: MyAppMap,
+      },
     ],
   },
   {
@@ -81,7 +86,6 @@ const routes = [
       { path: "/BoilingContainer", component: BoilingContainer },
       { path: "/FilterableProducts", component: FilterableProducts },
       { path: "/HooksExample", component: HooksExample },
-      { path: "/GoogleMap", component: GoogleMap },
     ],
   },
 ];
