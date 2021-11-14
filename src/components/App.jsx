@@ -29,8 +29,10 @@ import { HocComponents } from "./advancedComponents/HOC/ProductCard";
 
 import { RouteWithSubRoutes } from "../helpers/RouteHelper";
 import Hello from "./tasableComponents/firstTestableComponentHello/hello";
-import User from "./tasableComponents/User/user";
-import { MyAppMap } from "./tasableComponents/GoogleMapsTestable/map";
+import User from "./tasableComponents/User_SpyOnMethod/user";
+import MyAppMap from "./tasableComponents/GoogleMapsTestable_Mocking-Modules/map";
+import Contact from "./tasableComponents/GoogleMapsTestable_Mocking-Modules/Contact.jsx";
+import CheckboxWithLabel from "./tasableComponents/testingLibarySnapshotCheckBox/CheckboxWithLables";
 
 const routes = [
   {
@@ -74,6 +76,29 @@ const routes = [
       {
         path: "/advancedComponents/testableGoogleMap",
         component: MyAppMap,
+        props: {
+          center: { lat: 50.7357116, lng: 24.1378457 },
+          zoom: 10,
+        },
+      },
+      {
+        path: "/advancedComponents/contactComplexTestable",
+        component: Contact,
+        props: {
+          name: "Carl",
+          email: "Login@domain.com",
+          site: "https://example.com",
+          center: { lat: 50.7357116, lng: 24.1378457 },
+          zoom: 10,
+        },
+      },
+      {
+        path: "/advancedComponents/CheckboxWithLabel",
+        component: CheckboxWithLabel,
+        props: {
+          labelOn: "On",
+          labelOff: "Off",
+        },
       },
     ],
   },

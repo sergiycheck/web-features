@@ -29,7 +29,7 @@ const render = (status) => {
       renderedResult = <div>failure</div>;
       break;
     default:
-      renderedResult = <div>rendering...</div>;
+      renderedResult = <Spinner />;
       break;
   }
 
@@ -49,11 +49,11 @@ export const Map = ({ center, zoom, style }) => {
   return <div ref={mapRef} id="map" style={style}></div>;
 };
 
-export const MyAppMap = () => {
-  const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+// const center = { lat: 50.7357116, lng: 24.1378457 };
+// const zoom = 10;
 
-  const center = { lat: 50.7357116, lng: 24.1378457 };
-  const zoom = 10;
+const MyAppMap = ({ center, zoom }) => {
+  const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
   return (
     <div className="row">
@@ -73,3 +73,5 @@ export const MyAppMap = () => {
     </div>
   );
 };
+
+export default MyAppMap;
