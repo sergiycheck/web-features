@@ -33,7 +33,11 @@ import User from "./tasableComponents/User_SpyOnMethod/user";
 import MyAppMap from "./tasableComponents/GoogleMapsTestable_Mocking-Modules/map";
 import Contact from "./tasableComponents/GoogleMapsTestable_Mocking-Modules/Contact.jsx";
 import CheckboxWithLabel from "./tasableComponents/testingLibarySnapshotCheckBox/CheckboxWithLables";
-
+import { TsComponentsContainer } from "./typescriptComponents/componentsContainer";
+import { DateComponent } from "./typescriptComponents/example1/ExamplesTs";
+import { ShowAllComponentsAbove } from "./typescriptComponents/example1/ExamplesTs";
+import { ButtonContainer } from "./typescriptComponents/ts_hottel_tutorial/statelessComponent/button_stateless";
+import ExamplesWithChangingDomElementsWithState from "./differentComponents/FruitsRadioButtonArr";
 const routes = [
   {
     path: "/advancedComponents",
@@ -102,6 +106,30 @@ const routes = [
       },
     ],
   },
+
+  {
+    path: "/typeScriptComponents",
+    component: TsComponentsContainer,
+    routes: [
+      {
+        path: "/typeScriptComponents/example1",
+        component: DateComponent,
+        props: {
+          iso8601Date: new Date().toISOString(),
+          message: "Hi, i am here",
+        },
+      },
+      {
+        path: "/typeScriptComponents/allExamples",
+        component: ShowAllComponentsAbove,
+      },
+      {
+        path: "/typeScriptComponents/statelessButton",
+        component: ButtonContainer,
+      },
+    ],
+  },
+
   {
     path: "/",
     component: DifferentComponents,
@@ -111,6 +139,10 @@ const routes = [
       { path: "/BoilingContainer", component: BoilingContainer },
       { path: "/FilterableProducts", component: FilterableProducts },
       { path: "/HooksExample", component: HooksExample },
+      {
+        path: "/exampleChangeDomWithState",
+        component: ExamplesWithChangingDomElementsWithState,
+      },
     ],
   },
 ];
@@ -130,20 +162,22 @@ const App = () => {
         >
           <ul>
             <li>
-              <Link to="/">DifferentComponents</Link>
-            </li>
-
-            <li>
               <Link to="/advancedComponents">advancedComponents</Link>
+            </li>
+            <li>
+              <Link to="/typeScriptComponents">typeScriptComponents</Link>
+            </li>
+            <li>
+              <Link to="/">DifferentComponents</Link>
             </li>
           </ul>
         </nav>
 
         <div className="container mt-5">
           <Switch>
-            {routes.map((route, i) => (
-              <RouteWithSubRoutes key={i} {...route} />
-            ))}
+            {routes.map((route, i) => {
+              return <RouteWithSubRoutes key={i} {...route} />;
+            })}
           </Switch>
         </div>
       </div>

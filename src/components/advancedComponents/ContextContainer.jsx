@@ -11,6 +11,7 @@ import { RouteWithSubRoutes } from "../../helpers/RouteHelper";
 
 export const ContextContainer = ({ routes }) => {
   const { path } = useRouteMatch();
+
   return (
     <div style={{ display: "flex" }}>
       <nav

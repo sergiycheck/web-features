@@ -12,6 +12,10 @@
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "12.0.0",
     "@testing-library/user-event": "13.2.1",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.11.7",
+    "@types/react": "^17.0.34",
+    "@types/react-dom": "^17.0.11",
     "bootstrap": "5.1.1",
     "gh-pages": "3.2.3",
     "node-sass": "6.0.1",
@@ -23,6 +27,7 @@
     "react-scripts": "4.0.3",
     "react-test-renderer": "^17.0.2",
     "redux": "4.1.1",
+    "typescript": "^4.4.4",
     "web-vitals": "2.1.0"
   },
   "scripts": {
@@ -53,6 +58,7 @@
   },
   "homepage": "https://sergiycheck.github.io/web-features",
   "devDependencies": {
+    "@types/react-router-dom": "^5.3.2",
     "eslint-plugin-react-hooks": "4.2.0"
   }
 }
